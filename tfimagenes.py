@@ -38,6 +38,7 @@ while True:
     height, width = frame.shape[:2]
 
     # Preprocesamiento de la imagen para YOLO
+    # normalizamos el frame - cambiamos el formato de BGR a RGB - no recortamos la imagen
     blob = cv2.dnn.blobFromImage(frame, 1/255.0, (416, 416), swapRB=True, crop=False)
     net.setInput(blob)
 
@@ -49,6 +50,7 @@ while True:
         for obj in detection:
             scores = obj[5:]
             class_id = np.argmax(scores)
+            # obtenemos la confianza
             confidence = scores[class_id]
 
             # Verificar confianza
